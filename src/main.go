@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -11,8 +12,9 @@ import (
 	"github.com/fsnotify/fsnotify"
 )
 
-// İZLENECEK KLASÖR: "." koyarsan programın çalıştığı klasörü izler.
-const watchDir = "."
+// --- AYARLAR ---
+// Senin klasör adın "workspace" olduğu için burayı güncelledim:
+const watchDir = "../workspace"
 const debounceTime = 500 * time.Millisecond
 
 func main() {
@@ -24,7 +26,6 @@ func main() {
 
 	var timer *time.Timer
 
-	// Olayları dinleyen ana döngü
 	go func() {
 		for {
 			select {
@@ -32,13 +33,13 @@ func main() {
 				if !ok {
 					return
 				}
-				
-				// Sadece YAZMA veya OLUŞTURMA olayları
-				if event.Op&fsnotify.Write == fsnotify.Write || event.Op&fsnotify.Create == fsnotify.Create {
-					
-					// FİLTRELEME: Sadece .js ve .py dosyalarındaki değişimleri yakala
-					if strings.HasSuffix(event.Name, ".js") || strings.HasSuffix(event.Name, ".py") {
-						log.Println("Değişiklik algılandı:", event.Name)
+
+				// Sadece KAYDETME (Write) olayları
+				if event.Op&fsnotify.Write == fsnotify.Write {
+
+					// Filtreleme: .py veya .js
+					if strings.HasSuffix(event.Name, ".py") || strings.HasSuffix(event.Name, ".js") {
+						log.Printf("📝 Değişiklik: %s", filepath.Base(event.Name))
 
 						if timer != nil {
 							timer.Stop()
@@ -58,27 +59,47 @@ func main() {
 		}
 	}()
 
-	// Klasörü izleyiciye ekle
+	// Klasörleri izlemeye başla
 	err = filepath.Walk(watchDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 		if info.IsDir() {
 			return watcher.Add(path)
 		}
 		return nil
 	})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("❌ HATA: '%s' klasörü bulunamadı! Lütfen ismin doğru olduğundan emin ol.", watchDir)
 	}
 
-	log.Printf("İzleme başladı: %s (Çıkış için CTRL+C)", watchDir)
+	fmt.Println("------------------------------------------------")
+	fmt.Printf("👁️  GÖZCÜ DEVREDE! (Go Watcher)\n📁 İzlenen: %s\n", watchDir)
+	fmt.Println("------------------------------------------------")
+
 	<-make(chan struct{})
 }
 
+// --- DÜZELTİLEN FONKSİYON BURASI ---
 func runCommand() {
-	log.Println("Komut tetiklendi! İşlem yapılıyor...")
-	
-	// Ekrana yazı yazan basit bir komut
-	cmd := exec.Command("cmd", "/c", "echo DOSYA DEGISIKLIGI ALGILANDI!")
+	fmt.Println("\n🚀 OTOMASYON BAŞLATILIYOR...")
+
+	// 1. Python'a sadece dosya adını veriyoruz (Yolunu değil)
+	cmd := exec.Command("python", "main.py")
+
+	// 2. İŞTE EKSİK OLAN SATIR BU:
+	// Komut çalışmadan önce "workspace" klasörünün içine giriyor.
+	cmd.Dir = watchDir 
+
+	// Çıktıları terminale ver
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	cmd.Run()
+
+	err := cmd.Run()
+	if err != nil {
+		fmt.Printf("❌ Çalıştırma Hatası: %v\n", err)
+	} else {
+		fmt.Println("✅ İşlem Başarıyla Tamamlandı.")
+	}
+	fmt.Println("------------------------------------------------")
 }

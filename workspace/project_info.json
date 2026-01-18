@@ -1,0 +1,16 @@
+{
+  "projectName": "File Watcher & Executor",
+  "category": "Otomasyon Araçları",
+  "author": "Eray",
+  "version": "1.0.0",
+  "description": "Dosya değişikliklerini izleyen sistem",
+  "features": [
+    "Otomatik Algılama",
+    "Anlık Test",
+    "JSON Entegrasyonu"
+  ],
+  "requirements": {
+    "os": "Cross-Platform (Win/Linux)",
+    "language": "Python 3.14"
+  }
+}

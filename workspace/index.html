@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Monitor UI</title>
+    <style>
+        /* UI Standard: Responsive ve Canlı Renkler */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #0f172a; /* Koyu arka plan */
+            color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.2); /* Neon parlama */
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid #334155;
+        }
+
+        h1 {
+            color: #38bdf8; /* Canlı Mavi */
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .status-box {
+            background-color: #064e3b;
+            color: #34d399; /* Canlı Yeşil */
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            border: 1px solid #10b981;
+        }
+
+        .status-box.error {
+            background-color: #450a0a;
+            color: #f87171; /* Canlı Kırmızı */
+            border: 1px solid #ef4444;
+        }
+
+        .info {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Sistem Kontrol Paneli</h1>
+        <div class="info">Auto Control & Self-Test Module</div>
+        
+        <div class="status-box">
+            SYSTEM STATUS: ACTIVE
+        </div>
+        
+        <div class="info" style="margin-top: 20px;">
+            Version 1.0.0 • Powered by Python
+        </div>
+    </div>
+
+</body>
+</html>
