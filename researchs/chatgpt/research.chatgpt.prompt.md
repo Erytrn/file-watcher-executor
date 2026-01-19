@@ -97,6 +97,6 @@ Bu kullanım, akademik etik kurallarına uygundur.
 
 ## 👤 Hazırlayan
 **Eray**  
-Bilişim Güvenliği – 1. Sınıf  
+Bilişim Güvenliği – 2. Sınıf  
 İstinye Üniversitesi
 
