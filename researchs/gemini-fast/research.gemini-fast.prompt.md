@@ -1,4 +1,3 @@
-# Prompts for gemini-fast
 # 🤖 AI Prompt (Hızlı Araştırma)
 
 **Soru:**

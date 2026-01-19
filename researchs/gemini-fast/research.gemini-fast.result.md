@@ -1,4 +1,3 @@
-# Research Result for gemini-fast
 # ⚡ Araştırma Sonucu (Gemini Fast)
 
 ### Karşılaştırma Özeti

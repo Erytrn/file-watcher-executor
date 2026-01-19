@@ -1,4 +1,3 @@
-# Sources for gemini-fast
 # 📚 Kaynakça
 
 1. **Go fsnotify Documentation:** https://pkg.go.dev/github.com/fsnotify/fsnotify
